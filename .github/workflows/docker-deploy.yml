@@ -37,8 +37,8 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}    
     - name: Docker Build & Push to ACR
       run: |
-        docker build . -t ${{ env.CONTAINER_REGISTRY }}/nodejsapp:${{ github.sha }}
-        docker push ${{ env.CONTAINER_REGISTRY }}/nodejsapp:${{ github.sha }} 
+        docker build . --file src/PaymentGateway.Api/Dockerfile -t ${{ env.CONTAINER_REGISTRY }}/paymentgateway:${{ github.sha }}
+        docker push ${{ env.CONTAINER_REGISTRY }}/paymentgateway:${{ github.sha }} 
 
 # Uncomment the below action snippet if the Web app credentials are not updated as web app settings
 #     - name: Set Web App ACR authentication
