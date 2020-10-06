@@ -12,7 +12,7 @@ env:
   AZURE_WEBAPP_NAME: paymentgateway   # set this to your application's name
   CONTAINER_REGISTRY: ${{ secrets.REGISTRY_URL }}  # set secret with Container Registry URL, example : xyz.azurecr.io 
   AZURE_RESOURCE_GROUP: paymentgateway   # set this to your Azure Resource group's name - Needed only if you are provisioning the app in the workflow
-  AZURE_APP_PLAN: PaymentGatewayPLan  # set this to your App service plan's name - Needed only if you are provisioning the app in the workflow
+  AZURE_APP_PLAN: PaymentGatewayPlan  # set this to your App service plan's name - Needed only if you are provisioning the app in the workflow
   
 jobs:
   build-and-deploy-to-dev:
@@ -28,7 +28,7 @@ jobs:
       with:
          azcliversion: latest
          inlineScript: |
-           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i nginx
+           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }} 
     - name: ACR authentication
       uses: azure/docker-login@v1
       with:
