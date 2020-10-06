@@ -9,7 +9,7 @@ on: push
 #   AZURE_CREDENTIALS, REGISTRY_USERNAME, REGISTRY_PASSWORD, REGISTRY_URL
 # 2. Change these variables for your configuration:
 env:
-  AZURE_WEBAPP_NAME: PaymentGateway   # set this to your application's name
+  AZURE_WEBAPP_NAME: paymentgateway   # set this to your application's name
   CONTAINER_REGISTRY: ${{ secrets.REGISTRY_URL }}  # set secret with Container Registry URL, example : xyz.azurecr.io 
   AZURE_RESOURCE_GROUP: paymentgateway   # set this to your Azure Resource group's name - Needed only if you are provisioning the app in the workflow
   AZURE_APP_PLAN: PaymentGatewayPLan  # set this to your App service plan's name - Needed only if you are provisioning the app in the workflow
@@ -23,12 +23,12 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-#     - name: Azure CLI script to provision a new Web App for Container
-#       uses: azure/CLI@v0-beta
-#       with:
-#         azcliversion: latest
-#         inlineScript: |
-#           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i nginx
+    - name: Azure CLI script to provision a new Web App for Container
+      uses: azure/CLI@v0-beta
+      with:
+         azcliversion: latest
+         inlineScript: |
+           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i nginx
     - name: ACR authentication
       uses: azure/docker-login@v1
       with:
@@ -68,7 +68,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-        images: ${{ env.CONTAINER_REGISTRY }}/nodejsapp:${{ github.sha }}
+        images: ${{ env.CONTAINER_REGISTRY }}/paymentgateway:${{ github.sha }}
 #         startup-command: 'npm start'    # Include start up command to start the app container
 
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
