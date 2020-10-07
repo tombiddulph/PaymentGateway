@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PaymentGateway.Api</name>
+    </assembly>
+    <members>
+        <member name="M:PaymentGateway.Api.Controllers.PaymentController.Create(PaymentGateway.Models.Contracts.CreatePaymentRequest)">
+             <summary>
+             Creates a payment
+             </summary>
+             <remarks>
+              Sample Request:
+            
+                 POST /api/payment/create
+                 {
+            
+                 }
+             </remarks>
+             <param name="request"></param>
+             <returns></returns>
+        </member>
+        <member name="M:PaymentGateway.Api.Controllers.PaymentController.Transaction(PaymentGateway.Models.Contracts.TransactionRequest)">
+             <summary>
+             Gets a transaction by it's id
+             </summary>
+             <remarks>
+             Sample Request:
+            
+                 GET /api/payment/transaction?id={id}
+             
+             </remarks>
+             <param name="request"></param>
+             <returns>A transaction</returns>
+             <response code="200">Returns the transaction</response>
+             <response code="400">Bad request</response>
+             <response code="404">If the transaction is not found</response>
+        </member>
+    </members>
+</doc>

@@ -1,11 +1,14 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
@@ -19,9 +22,13 @@ namespace PaymentGateway.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GatewayDbContext>(options => { options.UseSqlite("Data Source=PaymentGateway.db;"); });
+            services.AddDbContext<GatewayDbContext>(options =>
+            {
+                options.UseSqlite("Data Source=PaymentGateway.db;");
+            });
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(
+                options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddLogging();
             services.PostConfigure<ApiBehaviorOptions>(ConfigureApiBehaviorOptions);
             services.AddSwaggerGen(config =>
@@ -43,11 +50,15 @@ namespace PaymentGateway.Api
                         Url = new Uri("https://example.com/license"),
                     }
                 });
+                config.DescribeAllParametersInCamelCase();
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 config.IncludeXmlComments(xmlPath);
             });
+            services.AddHealthChecks()
+                .AddCheck("HeartBeat", () => HealthCheckResult.Healthy(), new[] {"HeartBeat"})
+                .AddCheck("AlwaysUnhealthy", () => HealthCheckResult.Unhealthy());
         }
 
 
@@ -67,7 +78,14 @@ namespace PaymentGateway.Api
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/heartbeat", new HealthCheckOptions
+                {
+                    Predicate = (check) => check.Tags.Contains("HeartBeat")
+                });
+            });
         }
 
 

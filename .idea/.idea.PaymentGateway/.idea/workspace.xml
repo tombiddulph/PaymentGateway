@@ -33,12 +33,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05c3e7f2-a341-4cc9-95e9-35fd82ab7acc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PaymentGateway/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PaymentGateway/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PaymentGateway/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PaymentGateway/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PaymentGateway.sln" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentGateway.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PaymentGateway.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentGateway.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PaymentGateway.Api/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PaymentGateway.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/PaymentGateway.Api/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.debug.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.debug.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PaymentGateway.Api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/src/PaymentGateway.Api/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PaymentGateway.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/PaymentGateway.Api/Startup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,11 +72,11 @@
         <option value="$PROJECT_DIR$/src/PaymentGateway.Models/Domain/Transaction.cs" />
         <option value="$PROJECT_DIR$/src/PaymentGateway.Models/Domain/Card.cs" />
         <option value="$PROJECT_DIR$/src/PaymentGateway.Data/Class1.cs" />
-        <option value="$PROJECT_DIR$/src/PaymentGateway.Api/Startup.cs" />
         <option value="$PROJECT_DIR$/src/PaymentGateway.Data/Models/Card.cs" />
         <option value="$PROJECT_DIR$/src/PaymentGateway.Data/GatewayDbContext.cs" />
         <option value="$PROJECT_DIR$/src/PaymentGateway.Data/Models/Merchant.cs" />
         <option value="$PROJECT_DIR$/src/PaymentGateway.Api/Dockerfile" />
+        <option value="$PROJECT_DIR$/src/PaymentGateway.Api/Startup.cs" />
       </list>
     </option>
   </component>
@@ -89,8 +89,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34987342" />
-    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.04" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35015774" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.050473187" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -104,74 +104,11 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Docker.Unnamed">
-    <configuration name="PaymentGateway.Api.IntegrationTests" type="DotNetProject" factoryName=".NET Project">
-      <option name="EXE_PATH" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="PASS_PARENT_ENVS" value="1" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="USE_MONO" value="0" />
-      <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/test/PaymentGateway.Api.IntegrationTests/PaymentGateway.Api.IntegrationTests.csproj" />
-      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
-      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
-      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
-      <option name="PROJECT_KIND" value="DotNetCore" />
-      <option name="PROJECT_TFM" value="" />
-      <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
-    <configuration name="PaymentGateway" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/PaymentGateway/PaymentGateway.csproj" />
-      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
-      <option name="LAUNCH_PROFILE_NAME" value="PaymentGateway" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="USE_MONO" value="0" />
-      <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
-      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
-      <option name="SEND_DEBUG_REQUEST" value="1" />
-      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
-      <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
-    <configuration name="PaymentGateway: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/PaymentGateway/PaymentGateway.csproj" />
-      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
-      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="USE_MONO" value="0" />
-      <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
-      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
-      <option name="SEND_DEBUG_REQUEST" value="1" />
-      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
-      <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
-    <configuration name="PaymentGateway.Api: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+  <component name="RunManager" selected=".NET Launch Settings Profile.Unnamed">
+    <configuration name="Unnamed" type="LaunchSettings" factoryName=".NET Launch Settings Profile" nameIsGenerated="true">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/src/PaymentGateway.Api/PaymentGateway.Api.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
-      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="USE_MONO" value="0" />
-      <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
-      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
-      <option name="SEND_DEBUG_REQUEST" value="1" />
-      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
-      <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
-    <configuration name="PaymentGateway.Api: PaymentGateway" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/src/PaymentGateway.Api/PaymentGateway.Api.csproj" />
-      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
-      <option name="LAUNCH_PROFILE_NAME" value="PaymentGateway" />
+      <option name="LAUNCH_PROFILE_NAME" value="PaymentGateway.Api" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
@@ -198,11 +135,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue=".NET Launch Settings Profile.PaymentGateway" />
-      <item itemvalue=".NET Launch Settings Profile.PaymentGateway.Api: IIS Express" />
-      <item itemvalue=".NET Launch Settings Profile.PaymentGateway.Api: PaymentGateway" />
-      <item itemvalue=".NET Launch Settings Profile.PaymentGateway: IIS Express" />
-      <item itemvalue=".NET Project.PaymentGateway.Api.IntegrationTests" />
+      <item itemvalue=".NET Launch Settings Profile.Unnamed" />
       <item itemvalue="Docker.Unnamed" />
     </list>
   </component>
@@ -244,110 +177,110 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="0" y="266" width="1071" height="740" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601964297831">
+    <state x="0" y="266" width="1071" height="884" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602016397989">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
-    <state x="0" y="266" width="1071" height="740" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.2048.1162@0.23.2048.1162" timestamp="1601964297831" />
-    <state width="2006" height="427" key="GridCell.Tab.0.bottom" timestamp="1601964325138">
+    <state x="0" y="266" width="1071" height="884" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.2048.1162@0.23.2048.1162" timestamp="1602016397989" />
+    <state width="982" height="424" key="GridCell.Tab.0.bottom" timestamp="1602016936562">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.0.bottom/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.0.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325138" />
-    <state width="2006" height="427" key="GridCell.Tab.0.center" timestamp="1601964325138">
+    <state width="982" height="424" key="GridCell.Tab.0.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936562" />
+    <state width="982" height="424" key="GridCell.Tab.0.center" timestamp="1602016936561">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.0.center/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609648" />
-    <state width="2006" height="427" key="GridCell.Tab.0.center/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325138" />
-    <state width="2006" height="427" key="GridCell.Tab.0.left" timestamp="1601964325138">
+    <state width="982" height="424" key="GridCell.Tab.0.center/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936561" />
+    <state width="982" height="424" key="GridCell.Tab.0.left" timestamp="1602016936561">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.0.left/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609648" />
-    <state width="2006" height="427" key="GridCell.Tab.0.left/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325138" />
-    <state width="2006" height="427" key="GridCell.Tab.0.right" timestamp="1601964325138">
+    <state width="982" height="424" key="GridCell.Tab.0.left/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936561" />
+    <state width="982" height="424" key="GridCell.Tab.0.right" timestamp="1602016936562">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.0.right/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.0.right/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325138" />
-    <state width="2006" height="427" key="GridCell.Tab.1.bottom" timestamp="1601964325139">
+    <state width="982" height="424" key="GridCell.Tab.0.right/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936562" />
+    <state width="982" height="424" key="GridCell.Tab.1.bottom" timestamp="1602016936562">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.1.bottom/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.1.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325139" />
-    <state width="2006" height="427" key="GridCell.Tab.1.center" timestamp="1601964325139">
+    <state width="982" height="424" key="GridCell.Tab.1.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936562" />
+    <state width="982" height="424" key="GridCell.Tab.1.center" timestamp="1602016936562">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.1.center/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.1.center/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325139" />
-    <state width="2006" height="427" key="GridCell.Tab.1.left" timestamp="1601964325139">
+    <state width="982" height="424" key="GridCell.Tab.1.center/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936562" />
+    <state width="982" height="424" key="GridCell.Tab.1.left" timestamp="1602016936562">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.1.left/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.1.left/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325139" />
-    <state width="2006" height="427" key="GridCell.Tab.1.right" timestamp="1601964325139">
+    <state width="982" height="424" key="GridCell.Tab.1.left/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936562" />
+    <state width="982" height="424" key="GridCell.Tab.1.right" timestamp="1602016936562">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.1.right/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.1.right/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325139" />
-    <state width="2006" height="427" key="GridCell.Tab.2.bottom" timestamp="1601964325140">
+    <state width="982" height="424" key="GridCell.Tab.1.right/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936562" />
+    <state width="982" height="424" key="GridCell.Tab.2.bottom" timestamp="1602016936563">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.2.bottom/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.2.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325140" />
-    <state width="2006" height="427" key="GridCell.Tab.2.center" timestamp="1601964325140">
+    <state width="982" height="424" key="GridCell.Tab.2.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936563" />
+    <state width="982" height="424" key="GridCell.Tab.2.center" timestamp="1602016936563">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.2.center/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.2.center/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325140" />
-    <state width="2006" height="427" key="GridCell.Tab.2.left" timestamp="1601964325139">
+    <state width="982" height="424" key="GridCell.Tab.2.center/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936563" />
+    <state width="982" height="424" key="GridCell.Tab.2.left" timestamp="1602016936563">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.2.left/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.2.left/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325139" />
-    <state width="2006" height="427" key="GridCell.Tab.2.right" timestamp="1601964325140">
+    <state width="982" height="424" key="GridCell.Tab.2.left/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936563" />
+    <state width="982" height="424" key="GridCell.Tab.2.right" timestamp="1602016936563">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.2.right/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609649" />
-    <state width="2006" height="427" key="GridCell.Tab.2.right/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325140" />
-    <state width="2006" height="427" key="GridCell.Tab.3.bottom" timestamp="1601964328863">
+    <state width="982" height="424" key="GridCell.Tab.2.right/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936563" />
+    <state width="982" height="424" key="GridCell.Tab.3.bottom" timestamp="1602016936564">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.3.bottom/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.3.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1601964328863" />
-    <state width="2006" height="427" key="GridCell.Tab.3.center" timestamp="1601964328862">
+    <state width="982" height="424" key="GridCell.Tab.3.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936564" />
+    <state width="982" height="424" key="GridCell.Tab.3.center" timestamp="1602016936563">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.3.center/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.3.center/0.23.2048.1162@0.23.2048.1162" timestamp="1601964328862" />
-    <state width="2006" height="427" key="GridCell.Tab.3.left" timestamp="1601964328862">
+    <state width="982" height="424" key="GridCell.Tab.3.center/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936563" />
+    <state width="982" height="424" key="GridCell.Tab.3.left" timestamp="1602016936563">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.3.left/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.3.left/0.23.2048.1162@0.23.2048.1162" timestamp="1601964328862" />
-    <state width="2006" height="427" key="GridCell.Tab.3.right" timestamp="1601964328862">
+    <state width="982" height="424" key="GridCell.Tab.3.left/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936563" />
+    <state width="982" height="424" key="GridCell.Tab.3.right" timestamp="1602016936564">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.3.right/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.3.right/0.23.2048.1162@0.23.2048.1162" timestamp="1601964328862" />
-    <state width="2006" height="427" key="GridCell.Tab.4.bottom" timestamp="1601964325141">
+    <state width="982" height="424" key="GridCell.Tab.3.right/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936564" />
+    <state width="982" height="424" key="GridCell.Tab.4.bottom" timestamp="1602016936564">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.4.bottom/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.4.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325141" />
-    <state width="2006" height="427" key="GridCell.Tab.4.center" timestamp="1601964325141">
+    <state width="982" height="424" key="GridCell.Tab.4.bottom/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936564" />
+    <state width="982" height="424" key="GridCell.Tab.4.center" timestamp="1602016936564">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.4.center/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.4.center/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325141" />
-    <state width="2006" height="427" key="GridCell.Tab.4.left" timestamp="1601964325141">
+    <state width="982" height="424" key="GridCell.Tab.4.center/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936564" />
+    <state width="982" height="424" key="GridCell.Tab.4.left" timestamp="1602016936564">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.4.left/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.4.left/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325141" />
-    <state width="2006" height="427" key="GridCell.Tab.4.right" timestamp="1601964325141">
+    <state width="982" height="424" key="GridCell.Tab.4.left/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936564" />
+    <state width="982" height="424" key="GridCell.Tab.4.right" timestamp="1602016936564">
       <screen x="0" y="23" width="2048" height="1162" />
     </state>
     <state width="1237" height="519" key="GridCell.Tab.4.right/0.0.3440.1400@0.0.3440.1400" timestamp="1601924609650" />
-    <state width="2006" height="427" key="GridCell.Tab.4.right/0.23.2048.1162@0.23.2048.1162" timestamp="1601964325141" />
+    <state width="982" height="424" key="GridCell.Tab.4.right/0.23.2048.1162@0.23.2048.1162" timestamp="1602016936564" />
     <state x="452" y="435" key="Rider.ProjectTemplateDialog.Size" timestamp="1601925835077">
       <screen x="0" y="0" width="3440" height="1400" />
     </state>

@@ -1,0 +1,9 @@
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/bin/Debug/netstandard2.0/PaymentGateway.Models.deps.json
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/bin/Debug/netstandard2.0/PaymentGateway.Models.dll
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/bin/Debug/netstandard2.0/PaymentGateway.Models.pdb
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/obj/Debug/netstandard2.0/PaymentGateway.Models.csprojAssemblyReference.cache
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/obj/Debug/netstandard2.0/PaymentGateway.Models.AssemblyInfoInputs.cache
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/obj/Debug/netstandard2.0/PaymentGateway.Models.AssemblyInfo.cs
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/obj/Debug/netstandard2.0/PaymentGateway.Models.csproj.CoreCompileInputs.cache
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/obj/Debug/netstandard2.0/PaymentGateway.Models.dll
+/Users/thomasbiddulph/RiderProjects/PaymentGatewayPrivate/src/PaymentGateway.Models/obj/Debug/netstandard2.0/PaymentGateway.Models.pdb
