@@ -26,6 +26,8 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
+.idea
+
 # Visual Studio 2015
 .vs/
 @jamiegs
