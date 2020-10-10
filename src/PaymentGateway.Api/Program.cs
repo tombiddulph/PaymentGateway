@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace PaymentGateway.Api
 {
-    public class dappProgram
+    public class Program
     {
         public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
 
@@ -12,6 +12,7 @@ namespace PaymentGateway.Api
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging(logging => logging.AddConsole())
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+                .ConfigureWebHostDefaults(webBuilder =>
+                    webBuilder.UseStartup<Startup>().ConfigureKestrel(options => options.AddServerHeader = false));
     }
 }

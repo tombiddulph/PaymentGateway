@@ -6,7 +6,7 @@ namespace PaymentGateway.Models.Contracts
 {
     public class TransactionRequest
     {
-        [Required, FromQuery(Name = "id")]
+        [Required, FromRoute(Name = "id")]
         public Guid? Id { get; set; }
     }
 }

@@ -9,10 +9,11 @@ using PaymentGateway.Models.Enums;
 
 namespace PaymentGateway.Api.Controllers
 {
-    [ApiController, Route("api/[controller]/[action]")]
+    [ApiController, Route("api/[controller]/")]
     public class PaymentController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
+        private const string TransactionRouteTemplate = "{0}://{1}{2}/api/payment/{3}";
 
         public PaymentController(ITransactionService transactionService)
         {
@@ -44,16 +45,14 @@ namespace PaymentGateway.Api.Controllers
         {
             var transaction = _transactionService.CreateTransaction(request);
 
-            IActionResult response = transaction.Status switch
+            return transaction.Status switch
             {
                 PaymentStatus.Success => new CreatedResult(
-                    $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{HttpContext.Request.PathBase}/api/payment/transaction?id={transaction.Id}",
+                    $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{HttpContext.Request.PathBase}/api/payment/{transaction.Id}",
                     transaction),
                 PaymentStatus.Failure => new UnprocessableEntityResult(),
                 _ => throw new ArgumentOutOfRangeException()
             };
-
-            return response;
         }
 
 
@@ -63,7 +62,7 @@ namespace PaymentGateway.Api.Controllers
         /// <remarks>
         /// Sample Request:
         ///
-        ///     GET /api/payment/transaction?id={id}
+        ///     GET /api/payment/{id}
         /// 
         /// </remarks>
         /// <param name="request"></param>
@@ -71,17 +70,17 @@ namespace PaymentGateway.Api.Controllers
         /// <response code="200">Returns the transaction</response>
         /// <response code="400">Bad request</response>
         /// <response code="404">If the transaction is not found</response>
-        [HttpGet]
+        [HttpGet("{id}")]
         [Consumes(MediaTypeNames.Text.Plain)]
         [ProducesResponseType(statusCode: 200, type: typeof(object))]
-        public async Task<IActionResult> Transaction([FromQuery] TransactionRequest request)
+        public async Task<IActionResult> Transaction([FromRoute] TransactionRequest request)
         {
             var transaction = _transactionService.GetById(request.Id.GetValueOrDefault());
 
 
             return transaction.Status switch
             {
-                PaymentStatus.Success => new OkObjectResult(""),
+                PaymentStatus.Success => new OkObjectResult(transaction),
                 PaymentStatus.Failure => new BadRequestResult(),
                 _ => new ObjectResult("")
             };
