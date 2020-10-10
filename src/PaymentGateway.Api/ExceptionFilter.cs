@@ -52,7 +52,7 @@ namespace PaymentGateway.Api
             if (context.Exception is ApiException apiException)
             {
                 errorDetails.Message = apiException.Message;
-                er
+                
             }
 
             if (_hostingEnvironment.IsDevelopment())
