@@ -1,24 +1,34 @@
 ﻿using System;
 using PaymentGateway.Models.Domain;
+using PaymentGateway.Models.Enums;
 
 namespace PaymentGateway.Application.Services
 {
     internal class TransactionService : ITransactionService
     {
-        public Transaction CreateTransaction()
+        public Transaction CreateTransaction(object request)
         {
-            throw new NotImplementedException();
+            return new Transaction
+            {
+                Id = Guid.NewGuid(),
+                Status = PaymentStatus.Success
+            };
         }
 
         public Transaction GetById(Guid transactionId)
         {
-            throw new NotImplementedException();
+            if (transactionId == Guid.Empty)
+            {
+                throw new ArgumentException(nameof(transactionId));
+            }
+
+            return default;
         }
     }
 
     public interface ITransactionService
     {
-        Transaction CreateTransaction();
+        Transaction CreateTransaction(object request);
         Transaction GetById(Guid transactionId);
     }
 }

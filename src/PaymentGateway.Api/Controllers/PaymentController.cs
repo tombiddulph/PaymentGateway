@@ -1,15 +1,24 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
-using PaymentGateway.Models;
+using PaymentGateway.Application.Services;
 using PaymentGateway.Models.Contracts;
+using PaymentGateway.Models.Domain;
+using PaymentGateway.Models.Enums;
 
 namespace PaymentGateway.Api.Controllers
 {
     [ApiController, Route("api/[controller]/[action]")]
     public class PaymentController : ControllerBase
     {
+        private readonly ITransactionService _transactionService;
+
+        public PaymentController(ITransactionService transactionService)
+        {
+            _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
+        }
+
         /// <summary>
         /// Creates a payment
         /// </summary>
@@ -18,21 +27,33 @@ namespace PaymentGateway.Api.Controllers
         ///
         ///     POST /api/payment/create
         ///     {
-        ///
-        ///     }
+        ///         "cardNumber": "1234567890123456",
+        ///         "expiryMonth" : "20",
+        ///         "expiryYear": "22",
+        ///         "Amount" : "12.21",
+        ///         "cvv": "4135"
+        ///     }    
         /// </remarks>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(statusCode: 200, type: typeof(object))]
+        [ProducesResponseType(statusCode: 200, type: typeof(Transaction))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequest request)
         {
-            return Ok(new
+            var transaction = _transactionService.CreateTransaction(request);
+
+            IActionResult response = transaction.Status switch
             {
-                hello = "from post"
-            });
+                PaymentStatus.Success => new CreatedResult(
+                    $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{HttpContext.Request.PathBase}/api/payment/transaction?id={transaction.Id}",
+                    transaction),
+                PaymentStatus.Failure => new UnprocessableEntityResult(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            return response;
         }
 
 
@@ -55,10 +76,15 @@ namespace PaymentGateway.Api.Controllers
         [ProducesResponseType(statusCode: 200, type: typeof(object))]
         public async Task<IActionResult> Transaction([FromQuery] TransactionRequest request)
         {
-            return Ok(new
+            var transaction = _transactionService.GetById(request.Id.GetValueOrDefault());
+
+
+            return transaction.Status switch
             {
-                hello = "from get"
-            });
+                PaymentStatus.Success => new OkObjectResult(""),
+                PaymentStatus.Failure => new BadRequestResult(),
+                _ => new ObjectResult("")
+            };
         }
     }
 }

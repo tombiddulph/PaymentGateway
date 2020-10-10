@@ -12,6 +12,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PaymentGateway.Application;
 using PaymentGateway.Data;
 
 namespace PaymentGateway.Api
@@ -27,6 +28,7 @@ namespace PaymentGateway.Api
                 options.UseSqlite("Data Source=PaymentGateway.db;");
             });
 
+            services.AddApplication();
             services.AddMvc().AddJsonOptions(
                 options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddLogging();
