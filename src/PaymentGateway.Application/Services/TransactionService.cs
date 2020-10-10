@@ -22,6 +22,12 @@ namespace PaymentGateway.Application.Services
                 throw new ArgumentException(nameof(transactionId));
             }
 
+            return new Transaction
+            {
+                Id = transactionId,
+                Status = PaymentStatus.Success
+            };
+
             return default;
         }
     }
