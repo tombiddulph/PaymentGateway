@@ -13,8 +13,7 @@ namespace PaymentGateway.Api.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
-        private const string TransactionRouteTemplate = "{0}://{1}{2}/api/payment/{3}";
-
+        
         public PaymentController(ITransactionService transactionService)
         {
             _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
@@ -40,7 +39,7 @@ namespace PaymentGateway.Api.Controllers
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(statusCode: 200, type: typeof(Transaction))]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(statusCode: 400)]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequest request)
         {
             var transaction = _transactionService.CreateTransaction(request);
@@ -82,7 +81,7 @@ namespace PaymentGateway.Api.Controllers
             {
                 PaymentStatus.Success => new OkObjectResult(transaction),
                 PaymentStatus.Failure => new BadRequestResult(),
-                _ => new ObjectResult("")
+                _ => new NotFoundResult()
             };
         }
     }

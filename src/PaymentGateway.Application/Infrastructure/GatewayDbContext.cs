@@ -1,21 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PaymentGateway.Data.Models;
+using PaymentGateway.Application.Models;
 
-namespace PaymentGateway.Data
+namespace PaymentGateway.Application.Infrastructure
 {
     public class GatewayDbContext : DbContext
     {
-        public GatewayDbContext(DbContextOptions options): base(options)
+        public GatewayDbContext(DbContextOptions options) : base(options)
         {
-            
         }
 
         public GatewayDbContext()
         {
-            
         }
-        
-        
+
+        public DbSet<Merchant> Merchants { get; set; }
         public DbSet<Card> Cards { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,7 +23,7 @@ namespace PaymentGateway.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+            modelBuilder.Entity<Transaction>().HasOne<Merchant>().WithOne(x => x.Id);
         }
     }
 }

@@ -27,8 +27,6 @@ namespace PaymentGateway.Application.Services
                 Id = transactionId,
                 Status = PaymentStatus.Success
             };
-
-            return default;
         }
     }
 

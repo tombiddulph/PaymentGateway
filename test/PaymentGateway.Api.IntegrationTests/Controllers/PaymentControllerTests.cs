@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
@@ -10,6 +12,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 using PaymentGateway.Models.Contracts;
 using Xunit;
@@ -51,14 +54,60 @@ namespace PaymentGateway.Api.IntegrationTests.Controllers
             (CreatePaymentRequest request, ValidationProblemDetails error) testData)
         {
             var client = _webApplicationFactory.CreateClient();
-            var response = await client.PostAsJsonAsync("api/payment/create", testData.request);
+            var response = await client.PostAsJsonAsync("api/payment", testData.request);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-            
+
             var body = await ReadAsAsync<ValidationProblemDetails>(response.Content);
             body.Should().BeOfType<ValidationProblemDetails>();
-            
         }
+
+        [Theory]
+        [MemberData(nameof(ValidatationAttributeTestData))]
+        public static void Create_payment_attributes_validate_request(
+            (CreatePaymentRequest request, string error) testData)
+        {
+            DateTimeProvider.SetDateTime(new DateTime(2020, 10, 01));
+            var request = testData.request;
+
+            var validationResults = request.Validate(new ValidationContext(request)).ToList();
+            validationResults.FirstOrDefault(x => x.ErrorMessage == testData.error).Should().NotBeNull();
+        }
+
+        public static TheoryData<(CreatePaymentRequest request, string error)> ValidatationAttributeTestData =
+            new TheoryData<(CreatePaymentRequest request, string error)>
+            {
+                (new CreatePaymentRequest
+                {
+                    ExpiryYear = "kk",
+                    ExpiryMonth = "01",
+                    Cvv = "1234",
+                    Amount = "10.10",
+                    CardNumber = "1234567891234567"
+                }, "The computed card expiry date is invalid"),
+                (new CreatePaymentRequest
+                {
+                    ExpiryYear = "19",
+                    Cvv = "1234",
+                    Amount = "10.10",
+                    CardNumber = "1234567891234567"
+                }, "The expiry year is in the past"),
+                (new CreatePaymentRequest
+                {
+                    ExpiryYear = "20", ExpiryMonth = "09",
+                    Cvv = "1234",
+                    Amount = "10.10",
+                    CardNumber = "1234567891234567"
+                }, "The computed expiry date is in the past"),
+                (new CreatePaymentRequest
+                    {
+                        ExpiryYear = "21", ExpiryMonth = "01", Amount = "-1.00",
+                        Cvv = "1234",
+
+                        CardNumber = "1234567891234567"
+                    },
+                    "The field must be greater than 00.00")
+            };
 
         public static TheoryData<(CreatePaymentRequest, ValidationProblemDetails)> CreatePaymentTestData =
             new TheoryData<(CreatePaymentRequest, ValidationProblemDetails)>

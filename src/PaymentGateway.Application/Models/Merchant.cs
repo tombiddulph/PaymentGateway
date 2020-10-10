@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PaymentGateway.Data.Models
+namespace PaymentGateway.Application.Models
 {
-    public class Merchant
+    public class Merchant : IModelId
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

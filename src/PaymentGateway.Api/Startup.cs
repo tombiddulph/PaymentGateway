@@ -19,6 +19,14 @@ namespace PaymentGateway.Api
 {
     public class Startup
     {
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -29,7 +37,7 @@ namespace PaymentGateway.Api
             });
 
             services.AddApplication();
-            services.AddMvc().AddJsonOptions(
+            services.AddMvc(options => { options.Filters.Add(new ExceptionFilter(_env)); }).AddJsonOptions(
                 options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddLogging();
             services.PostConfigure<ApiBehaviorOptions>(ConfigureApiBehaviorOptions);
@@ -59,7 +67,7 @@ namespace PaymentGateway.Api
                 config.IncludeXmlComments(xmlPath);
             });
             services.AddHealthChecks()
-                .AddCheck("HeartBeat", () => HealthCheckResult.Healthy(), new[] {"HeartBeat"})
+                .AddCheck("HeartBeat", () => HealthCheckResult.Healthy(), new[] { "HeartBeat" })
                 .AddCheck("AlwaysUnhealthy", () => HealthCheckResult.Unhealthy());
         }
 
@@ -79,7 +87,6 @@ namespace PaymentGateway.Api
             });
 
             app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

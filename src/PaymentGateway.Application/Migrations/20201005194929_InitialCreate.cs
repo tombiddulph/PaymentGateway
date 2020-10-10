@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PaymentGateway.Data.Migrations
+namespace PaymentGateway.Application.Migrations
 {
     public partial class InitialCreate : Migration
     {

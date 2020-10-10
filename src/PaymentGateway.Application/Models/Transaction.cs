@@ -1,14 +1,18 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PaymentGateway.Application.Infrastructure;
 
-namespace PaymentGateway.Data.Models
+namespace PaymentGateway.Application.Models
 {
-    public class Transaction
+    public class Transaction : IModelId
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        public PaymentStatus Status { get; set; }
         public decimal Amount { get; set; }
+        public Guid MerchantId { get; set; }
+        public Guid CardDetailsId { get; set; }
     }
 }

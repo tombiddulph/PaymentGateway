@@ -42,7 +42,7 @@ namespace PaymentGateway.Models.Contracts
                 });
             }
 
-            var now = DateTime.Now;
+            var now = DateTimeProvider.Now();
             if (parsedDate.Year < now.Year)
             {
                 yield return new ValidationResult("The expiry year is in the past", new[] { ExpiryYear });
