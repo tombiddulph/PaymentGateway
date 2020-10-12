@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
+using PaymentGateway.Models;
 using PaymentGateway.Models.Contracts;
 using Xunit;
 

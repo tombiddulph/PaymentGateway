@@ -1,8 +1,8 @@
 using System;
 
-namespace PaymentGateway.Api
+namespace PaymentGateway.Models
 {
-    public class DateTimeProvider
+    public static class DateTimeProvider
     {
         public static Func<DateTime> Now = () => DateTime.Now;
         public static void SetDateTime(DateTime dateTime) => Now = () => dateTime;

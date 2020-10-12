@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PaymentGateway.Application;
-using PaymentGateway.Data;
+using PaymentGateway.Application.Infrastructure;
 
 namespace PaymentGateway.Api
 {

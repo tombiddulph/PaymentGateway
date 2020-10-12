@@ -23,7 +23,7 @@ namespace PaymentGateway.Application.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Transaction>().HasOne<Merchant>().WithOne(x => x.Id);
+          
         }
     }
 }
