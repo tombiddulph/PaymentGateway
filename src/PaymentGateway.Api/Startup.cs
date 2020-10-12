@@ -92,7 +92,7 @@ namespace PaymentGateway.Api
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/heartbeat", new HealthCheckOptions
                 {
-                    Predicate = (check) => check.Tags.Contains("HeartBeat")
+                    Predicate = check => check.Tags.Contains("HeartBeat")
                 });
             });
         }

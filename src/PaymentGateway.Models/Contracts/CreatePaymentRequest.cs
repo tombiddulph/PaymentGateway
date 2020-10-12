@@ -27,6 +27,9 @@ namespace PaymentGateway.Models.Contracts
          RegularExpression(@"\d{3,4}", ErrorMessage = RequestErrors.Numeric)]
         public string Cvv { get; set; }
 
+        [Required]
+        public string Name { get; set; }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var isValidExpiry = DateTime.TryParseExact($"{ExpiryMonth}{ExpiryYear}", "MMyy",

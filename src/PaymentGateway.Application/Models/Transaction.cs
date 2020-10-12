@@ -13,6 +13,8 @@ namespace PaymentGateway.Application.Models
         public PaymentStatus Status { get; set; }
         public decimal Amount { get; set; }
         public Guid MerchantId { get; set; }
-        public Guid CardDetailsId { get; set; }
+        public Merchant Merchant { get; set; }
+        public Guid CardId { get; set; }
+        public Card Card { get; set; }
     }
 }

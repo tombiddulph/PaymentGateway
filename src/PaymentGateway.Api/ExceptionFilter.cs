@@ -8,42 +8,32 @@ using Microsoft.Extensions.Logging;
 
 namespace PaymentGateway.Api
 {
-    
-    class t : ExceptionFilterAttribute{}
-    
-    
     public class ExceptionFilter : ExceptionFilterAttribute
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly ILogger<ExceptionFilter> _logger;
 
         public ExceptionFilter(
             IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }
-        
-        
+
 
         public override Task OnExceptionAsync(ExceptionContext context)
         {
-
-
             context.Result = new UnprocessableEntityResult();
-            
-            
-            using var scope = _logger.BeginScope("Exception filter");
-            _logger.LogError(context.Exception, context.Exception.Message);
-            
+
+            //todo log and properly handle exception
+
             context.ExceptionHandled = true;
             if (_hostingEnvironment.IsDevelopment())
             {
-                context.Result = new UnauthorizedObjectResult(context.Exception);
+                context.Result = new UnprocessableEntityObjectResult(context.Exception.Message);
                 return Task.CompletedTask;
             }
 
             context.Result = new UnprocessableEntityResult();
-            
+
             return Task.CompletedTask;
         }
     }

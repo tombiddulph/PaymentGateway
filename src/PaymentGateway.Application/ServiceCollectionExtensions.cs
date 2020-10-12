@@ -9,9 +9,10 @@ namespace PaymentGateway.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<ITransactionService, TransactionService>();
             serviceCollection.AddScoped<IRepository<Card>, Repository<Card>>();
             serviceCollection.AddScoped<IRepository<Merchant>, Repository<Merchant>>();
+            serviceCollection.AddScoped<IRepository<Transaction>, TransactionRepository>();
+            serviceCollection.AddScoped<ITransactionService, TransactionService>();
             return serviceCollection;
         }
     }

@@ -13,7 +13,7 @@ namespace PaymentGateway.Api.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
-        
+
         public PaymentController(ITransactionService transactionService)
         {
             _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
@@ -25,7 +25,7 @@ namespace PaymentGateway.Api.Controllers
         /// <remarks>
         ///  Sample Request:
         ///
-        ///     POST /api/payment/create
+        ///     POST /api/payment/
         ///     {
         ///         "cardNumber": "1234567890123456",
         ///         "expiryMonth" : "20",
@@ -42,7 +42,7 @@ namespace PaymentGateway.Api.Controllers
         [ProducesResponseType(statusCode: 400)]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequest request)
         {
-            var transaction = _transactionService.CreateTransaction(request);
+            var transaction = await _transactionService.CreateTransactionAsync(request);
 
             return transaction.Status switch
             {
@@ -74,13 +74,13 @@ namespace PaymentGateway.Api.Controllers
         [ProducesResponseType(statusCode: 200, type: typeof(object))]
         public async Task<IActionResult> Transaction([FromRoute] TransactionRequest request)
         {
-            var transaction = _transactionService.GetById(request.Id.GetValueOrDefault());
-
+            var transaction = await _transactionService.GetById(request.Id.GetValueOrDefault());
 
             return transaction.Status switch
             {
                 PaymentStatus.Success => new OkObjectResult(transaction),
                 PaymentStatus.Failure => new BadRequestResult(),
+                PaymentStatus.NotFound => new NotFoundObjectResult($"Transaction {request.Id} not found "),
                 _ => new NotFoundResult()
             };
         }

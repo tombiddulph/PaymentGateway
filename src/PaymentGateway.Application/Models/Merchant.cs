@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PaymentGateway.Application.Models
 {
+    [Table("merchants")]
     public class Merchant : IModelId
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
