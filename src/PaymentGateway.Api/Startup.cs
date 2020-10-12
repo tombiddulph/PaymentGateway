@@ -33,6 +33,7 @@ namespace PaymentGateway.Api
         {
             services.AddDbContext<GatewayDbContext>(options =>
             {
+                options.UseLazyLoadingProxies();
                 options.UseSqlite("Data Source=PaymentGateway.db;");
             });
 

@@ -8,7 +8,7 @@ namespace PaymentGateway.Application.Infrastructure
     {
         public GatewayDbContext(DbContextOptions options) : base(options)
         {
-           // Database.Migrate();
+            Database.Migrate();
         }
 
         public GatewayDbContext()
@@ -39,6 +39,12 @@ namespace PaymentGateway.Application.Infrastructure
                     Id = Guid.Parse("8d5b2c2b-9b8a-4ad1-9286-a8107ae7f345"),
                     Name = "Groceries r us"
                 });
+
+            modelBuilder.Entity<Card>()
+                .HasMany(c => c.Transactions)
+                .WithOne(x => x.Card);
+            
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

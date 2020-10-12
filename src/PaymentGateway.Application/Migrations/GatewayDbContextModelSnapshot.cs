@@ -104,7 +104,7 @@ namespace PaymentGateway.Application.Migrations
             modelBuilder.Entity("PaymentGateway.Application.Models.Transaction", b =>
                 {
                     b.HasOne("PaymentGateway.Application.Models.Card", "Card")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

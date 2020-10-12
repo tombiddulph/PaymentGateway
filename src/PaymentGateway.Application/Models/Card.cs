@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,5 +20,7 @@ namespace PaymentGateway.Application.Models
         public string HolderName { get; set; }
         [StringLength(16)]
         public string Number { get; set; }
+        
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

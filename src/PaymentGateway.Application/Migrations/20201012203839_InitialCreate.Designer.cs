@@ -9,8 +9,8 @@ using PaymentGateway.Application.Infrastructure;
 namespace PaymentGateway.Application.Migrations
 {
     [DbContext(typeof(GatewayDbContext))]
-    [Migration("20201012200227_Create")]
-    partial class Create
+    [Migration("20201012203839_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,7 +106,7 @@ namespace PaymentGateway.Application.Migrations
             modelBuilder.Entity("PaymentGateway.Application.Models.Transaction", b =>
                 {
                     b.HasOne("PaymentGateway.Application.Models.Card", "Card")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

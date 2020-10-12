@@ -23,7 +23,7 @@ namespace PaymentGateway.Application.Infrastructure
 
         public async Task<Transaction> GetByIdAsync(Guid id)
         {
-            var transaction = await _context.Transactions.FirstOrDefaultAsync(x => x.Id == id);
+            var transaction = await _context.Transactions.FindAsync(id);
             return transaction;
         }
 
