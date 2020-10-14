@@ -48,7 +48,10 @@ namespace PaymentGateway.Models.Contracts
             var now = DateTimeProvider.Now();
             if (parsedDate.Year < now.Year)
             {
-                yield return new ValidationResult("The expiry year is in the past", new[] { ExpiryYear });
+                yield return new ValidationResult("The expiry year is in the past", new[]
+                {
+                    nameof(ExpiryYear)
+                });
             }
 
             if (parsedDate.Year == now.Year && parsedDate.Month < now.Month)
@@ -66,12 +69,12 @@ namespace PaymentGateway.Models.Contracts
 
             if (!isValidAmount)
             {
-                yield return new ValidationResult("The field is invalid", new[] { Amount });
+                yield return new ValidationResult("The field is invalid", new[] { nameof(Amount) });
             }
 
             if (parsedAmount <= 0)
             {
-                yield return new ValidationResult("The field must be greater than 00.00", new[] { Amount });
+                yield return new ValidationResult("The field must be greater than 00.00", new[] { nameof(Amount) });
             }
         }
     }

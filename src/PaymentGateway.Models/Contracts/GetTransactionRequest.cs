@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PaymentGateway.Models.Contracts
 {
-    public class TransactionRequest
+    public class GetTransactionRequest
     {
         [Required, FromRoute(Name = "id")]
         public Guid? Id { get; set; }

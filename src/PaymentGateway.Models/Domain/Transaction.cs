@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using PaymentGateway.Models.Enums;
 
@@ -17,8 +18,6 @@ namespace PaymentGateway.Models.Domain
 
         [JsonPropertyName("cardNumber")]
         public string CardNumber { get; set; }
-
-        public bool ShouldSerializeAmount() => Amount.HasValue;
-        public bool ShouldSerializeCardNumber => !string.IsNullOrEmpty(CardNumber);
+        
     }
 }

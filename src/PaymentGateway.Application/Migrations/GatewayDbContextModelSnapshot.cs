@@ -7,7 +7,7 @@ using PaymentGateway.Application.Infrastructure;
 
 namespace PaymentGateway.Application.Migrations
 {
-    [DbContext(typeof(GatewayDbContext))]
+    [DbContext(typeof(PaymentGatewayDbContext))]
     partial class GatewayDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

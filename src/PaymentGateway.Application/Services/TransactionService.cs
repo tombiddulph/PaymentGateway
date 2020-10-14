@@ -13,6 +13,11 @@ namespace PaymentGateway.Application.Services
     {
         private readonly IRepository<PaymentGateway.Application.Models.Transaction> _transactionRepo;
 
+        private static readonly Transaction NotFound = new Transaction
+        {
+            Status = PaymentStatus.NotFound
+        };
+
         public TransactionService(IRepository<Models.Transaction> transactionRepo)
         {
             _transactionRepo = transactionRepo ?? throw new ArgumentNullException(nameof(transactionRepo));
@@ -45,7 +50,7 @@ namespace PaymentGateway.Application.Services
 
             var transaction = await _transactionRepo.GetByIdAsync(transactionId);
 
-            if (transaction != null)
+            if (transaction is {})
             {
                 return new Transaction
                 {
@@ -56,16 +61,13 @@ namespace PaymentGateway.Application.Services
                 };
             }
 
-            return new Transaction
-            {
-                Status = PaymentStatus.NotFound
-            };
+            return NotFound;
         }
 
         private static Models.Transaction MapToTransaction(CreatePaymentRequest request)
         {
             var cardId = Guid.NewGuid();
-            
+
             return new Models.Transaction
             {
                 Amount = decimal.Parse(request.Amount, NumberStyles.Currency, NumberFormatInfo.InvariantInfo),

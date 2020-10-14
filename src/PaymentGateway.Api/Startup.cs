@@ -29,9 +29,9 @@ namespace PaymentGateway.Api
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GatewayDbContext>(options =>
+            services.AddDbContext<PaymentGatewayDbContext>(options =>
             {
                 options.UseLazyLoadingProxies();
                 options.UseSqlite("Data Source=PaymentGateway.db;");
@@ -39,7 +39,8 @@ namespace PaymentGateway.Api
 
             services.AddApplication();
             services.AddMvc(options => { options.Filters.Add(new ExceptionFilter(_env)); }).AddJsonOptions(
-                options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+                options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+            );
             services.AddLogging();
             services.PostConfigure<ApiBehaviorOptions>(ConfigureApiBehaviorOptions);
             services.AddSwaggerGen(config =>
@@ -53,7 +54,7 @@ namespace PaymentGateway.Api
                     Contact = new OpenApiContact
                     {
                         Name = "Tom Biddulph",
-                        Email = "tom AT thomasbiddulph DOT com",
+                        Email = "tom[at]thomasbiddulph.com",
                     },
                     License = new OpenApiLicense
                     {
@@ -74,11 +75,16 @@ namespace PaymentGateway.Api
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
             app.UseSwagger().UseSwaggerUI(config =>

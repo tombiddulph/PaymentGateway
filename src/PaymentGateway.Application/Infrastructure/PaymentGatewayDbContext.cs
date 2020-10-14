@@ -4,17 +4,17 @@ using PaymentGateway.Application.Models;
 
 namespace PaymentGateway.Application.Infrastructure
 {
-    public sealed class GatewayDbContext : DbContext
+    public sealed class PaymentGatewayDbContext : DbContext
     {
-        public GatewayDbContext(DbContextOptions options) : base(options)
+        public PaymentGatewayDbContext(DbContextOptions options) : base(options)
         {
-            Database.Migrate();
+            if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            {
+                Database.Migrate();
+            }
+          
         }
-
-        public GatewayDbContext()
-        {
-          //  Database.Migrate();
-        }
+        
 
         public DbSet<Merchant> Merchants { get; set; }
         public DbSet<Card> Cards { get; set; }
@@ -22,7 +22,7 @@ namespace PaymentGateway.Application.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=PaymentGateway.db;");
+            //optionsBuilder.UseSqlite("Data Source=PaymentGateway.db;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

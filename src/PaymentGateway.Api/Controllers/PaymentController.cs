@@ -27,6 +27,7 @@ namespace PaymentGateway.Api.Controllers
         ///
         ///     POST /api/payment/
         ///     {
+        ///         "name": "Tom"
         ///         "cardNumber": "1234567890123456",
         ///         "expiryMonth" : "20",
         ///         "expiryYear": "22",
@@ -38,17 +39,23 @@ namespace PaymentGateway.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(statusCode: 200, type: typeof(Transaction))]
-        [ProducesResponseType(statusCode: 400)]
+        [ProducesResponseType(statusCode: 200, type: typeof(CreatePaymentResponse))]
+        [ProducesResponseType(statusCode: 400, type: typeof(ValidationProblemDetails))]
+        [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequest request)
         {
             var transaction = await _transactionService.CreateTransactionAsync(request);
+
 
             return transaction.Status switch
             {
                 PaymentStatus.Success => new CreatedResult(
                     $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{HttpContext.Request.PathBase}/api/payment/{transaction.Id}",
-                    transaction),
+                    new CreatePaymentResponse
+                    {
+                        Id = transaction.Id,
+                        Status = transaction.Status
+                    }),
                 PaymentStatus.Failure => new UnprocessableEntityResult(),
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -71,8 +78,11 @@ namespace PaymentGateway.Api.Controllers
         /// <response code="404">If the transaction is not found</response>
         [HttpGet("{id}")]
         [Consumes(MediaTypeNames.Text.Plain)]
-        [ProducesResponseType(statusCode: 200, type: typeof(object))]
-        public async Task<IActionResult> Transaction([FromRoute] TransactionRequest request)
+        [ProducesResponseType(statusCode: 200, type: typeof(GetTransactionRequest))]
+        [ProducesResponseType(statusCode: 400, type: typeof(ValidationProblemDetails))]
+        [ProducesResponseType(statusCode: 400, type: typeof(NotFoundObjectResult))]
+        [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
+        public async Task<IActionResult> Transaction([FromRoute] GetTransactionRequest request)
         {
             var transaction = await _transactionService.GetById(request.Id.GetValueOrDefault());
 
@@ -81,7 +91,6 @@ namespace PaymentGateway.Api.Controllers
                 PaymentStatus.Success => new OkObjectResult(transaction),
                 PaymentStatus.Failure => new BadRequestResult(),
                 PaymentStatus.NotFound => new NotFoundObjectResult($"Transaction {request.Id} not found "),
-                _ => new NotFoundResult()
             };
         }
     }

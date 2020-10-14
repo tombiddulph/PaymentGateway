@@ -8,7 +8,7 @@ using PaymentGateway.Application.Infrastructure;
 
 namespace PaymentGateway.Application.Migrations
 {
-    [DbContext(typeof(GatewayDbContext))]
+    [DbContext(typeof(PaymentGatewayDbContext))]
     [Migration("20201012203839_InitialCreate")]
     partial class InitialCreate
     {
