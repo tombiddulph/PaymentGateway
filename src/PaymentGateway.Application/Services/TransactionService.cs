@@ -65,9 +65,9 @@ namespace PaymentGateway.Application.Services
                 throw new ArgumentNullException(nameof(userId));
             }
 
-            return GetById();
+            return Get();
 
-            async Task<DomainTransaction> GetById()
+            async Task<DomainTransaction> Get()
             {
                 var transaction = await _transactionRepo.FindAsync(x => x.Id == transactionId && x.UserId == userId);
 
@@ -78,7 +78,7 @@ namespace PaymentGateway.Application.Services
                         Id = transaction.Id,
                         Status = Enum.Parse<PaymentStatus>(transaction.Status.ToString("G")),
                         Amount = transaction.Amount,
-                        CardNumber = transaction.Card.Number
+                        CardNumber = transaction.Card.MaskCardNumber()
                     };
                 }
 

@@ -5,7 +5,12 @@
         <LangVersion>8</LangVersion>
         <AssemblyName>PaymentGateway.Api</AssemblyName>
         <RootNamespace>PaymentGateway.Api</RootNamespace>
+        
     </PropertyGroup>
+    <PropertyGroup>
+        <DisableImplicitComponentsAnalyzers>true</DisableImplicitComponentsAnalyzers>
+    </PropertyGroup>
+    
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />

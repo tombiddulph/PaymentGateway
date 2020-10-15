@@ -160,7 +160,7 @@ namespace PaymentGateway.Api.IntegrationTests.Controllers
             {
                 return JsonSerializer.Deserialize<T>(str);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return default;
             }

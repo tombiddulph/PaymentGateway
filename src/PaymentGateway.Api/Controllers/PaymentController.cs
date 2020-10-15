@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PaymentGateway.Application.Services;
 using PaymentGateway.Models.Contracts;
 using PaymentGateway.Models.Enums;
+#pragma warning disable 8509
 
 namespace PaymentGateway.Api.Controllers
 {
@@ -38,11 +39,13 @@ namespace PaymentGateway.Api.Controllers
         /// <param name="request"></param>
         /// <response code="201">Returns the created payment</response>
         /// <response code="400">Bad request</response>
+        /// <response code="401">Unauthorized</response>
         /// <response code="422">If An unknown error occurs</response>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(statusCode: 201, type: typeof(CreatePaymentResponse))]
         [ProducesResponseType(statusCode: 400, type: typeof(ValidationProblemDetails))]
+        [ProducesResponseType(statusCode: 401, type: typeof(UnauthorizedResult))]
         [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequest request)
         {
@@ -79,12 +82,15 @@ namespace PaymentGateway.Api.Controllers
         /// <returns>A transaction</returns>
         /// <response code="200">Returns the transaction</response>
         /// <response code="400">Bad request</response>
+        /// <response code="401">Unauthorized</response>
         /// <response code="404">If the transaction is not found</response>
+        /// <response code="422">Bad request</response>
         [HttpGet("{id}")]
         [Consumes(MediaTypeNames.Text.Plain)]
         [ProducesResponseType(statusCode: 200, type: typeof(GetTransactionRequest))]
         [ProducesResponseType(statusCode: 400, type: typeof(ValidationProblemDetails))]
         [ProducesResponseType(statusCode: 400, type: typeof(NotFoundObjectResult))]
+        [ProducesResponseType(statusCode: 401, type: typeof(UnauthorizedResult))]
         [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
         public async Task<IActionResult> Transaction([FromRoute] GetTransactionRequest request)
         {

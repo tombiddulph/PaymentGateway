@@ -1,30 +1,30 @@
 using System;
+using PaymentGateway.Application.Models;
 
 namespace PaymentGateway.Application
 {
     public static class Extensions
     {
-        public static T SafeInvoke<T>(this Func<T> func, Action<Exception> errorHandler)
+        /// <summary>
+        /// Masks all but the last 4 digits of a card nubmer
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static string MaskCardNumber(this Card card)
         {
-            if (func == null)
+            if (card == null)
             {
-                throw new ArgumentException(nameof(func));
+                throw new ArgumentNullException(nameof(card));
             }
 
-            if (errorHandler == null)
+            if (string.IsNullOrEmpty(card.Number))
             {
-                throw new ArgumentNullException(nameof(errorHandler));
+                return string.Empty;
             }
 
-            try
-            {
-                return func();
-            }
-            catch (Exception e)
-            {
-                errorHandler(e);
-                throw;
-            }
+            var length = card.Number.Length - 4;
+            return new string('*', length) + card.Number.Substring(length);
         }
 
         /// <summary>
@@ -42,12 +42,17 @@ namespace PaymentGateway.Application
         {
             if (func == null)
             {
-                throw new ArgumentException(nameof(func));
+                throw new ArgumentNullException(nameof(func));
             }
 
             if (errorHandler == null)
             {
                 throw new ArgumentNullException(nameof(errorHandler));
+            }
+
+            if (arg == null)
+            {
+                throw new ArgumentNullException(nameof(arg));
             }
 
             try
