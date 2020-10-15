@@ -30,7 +30,7 @@ jobs:
     - name: Run unit tests
       uses: zyborg/dotnet-tests-report@v1.1.0
       with:
-         project_path: test/PaymentGateway.Api.Tests.Unit
+         project_path: test/PaymentGateway.Api.Tests.Unit/PaymentGateway.Api.Tests.Unit.csproj
          report_name: payment_gateway_unit_tests
          report_title: PaymentGateway Unit tests
          github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -41,7 +41,7 @@ jobs:
     - name: Run integration tests
       uses: zyborg/dotnet-tests-report@v1.1.0
       with:
-         project_path: test/PaymentGateway.Api.Tests.Integration/
+         project_path: test/PaymentGateway.Api.Tests.Integration/PaymentGateway.Api.Tests.Integration.csproj
          report_name: payment_gateway_integration_tests
          report_title: PaymentGateway Integration tests
          github_token: ${{ secrets.GITHUB_TOKEN }}
