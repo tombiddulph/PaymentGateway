@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using PaymentGateway.Application;
 using PaymentGateway.Application.Infrastructure;
+using PaymentGateway.Models.Domain;
 
 namespace PaymentGateway.Api.Tests.Integration
 {
@@ -18,6 +20,8 @@ namespace PaymentGateway.Api.Tests.Integration
                 options.UseLazyLoadingProxies();
                 options.UseInMemoryDatabase(nameof(TestStartup));
             });
+
+
             services.AddApplication();
             services.AddMvc()
                 .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -33,6 +37,10 @@ namespace PaymentGateway.Api.Tests.Integration
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+            using var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<PaymentGatewayDbContext>();
+            dbContext.Database.EnsureCreated();
         }
     }
 }

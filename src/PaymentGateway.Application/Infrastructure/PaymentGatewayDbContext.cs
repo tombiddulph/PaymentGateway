@@ -10,7 +10,7 @@ namespace PaymentGateway.Application.Infrastructure
     {
         public PaymentGatewayDbContext(DbContextOptions options) : base(options)
         {
-            if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            if (Database.IsSqlite())
             {
                 Database.Migrate();
             }
@@ -55,7 +55,41 @@ namespace PaymentGateway.Application.Infrastructure
                 .HasMany(c => c.Transactions)
                 .WithOne(x => x.Card);
 
+
+            if (Database.IsInMemory())
+            {
+                SeedTestData(modelBuilder);
+            }
+            
             base.OnModelCreating(modelBuilder);
+        }
+
+        private static void SeedTestData(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Card>().HasData(new Card
+            {
+                Id = Guid.Parse("ba636903-ed0b-4801-9589-bb5c34b4211d"),
+                Cvv = "123",
+                Number = "1234123412341234",
+                ExpiryMonth = "09",
+                ExpiryYear = "30",
+                HolderName = "Test User"
+            });
+            modelBuilder.Entity<Merchant>().HasData(new Merchant
+            {
+                Id = Guid.Parse("31751f4d-455b-427e-907f-f0bcc60b869e"),
+                Name = "Computer shop inc"
+            });
+
+            modelBuilder.Entity<Transaction>().HasData(new Transaction
+            {
+                Id = Guid.Parse("59ead15a-f908-4a66-9be3-4967520c621e"),
+                UserId = "Test user",
+                CardId = Guid.Parse("ba636903-ed0b-4801-9589-bb5c34b4211d"),
+                MerchantId = Guid.Parse("31751f4d-455b-427e-907f-f0bcc60b869e"),
+                Amount = 1234.93M,
+                Status = PaymentStatus.Success
+            });
         }
     }
 }

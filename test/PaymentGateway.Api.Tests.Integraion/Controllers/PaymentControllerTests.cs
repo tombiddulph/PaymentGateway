@@ -157,6 +157,25 @@ namespace PaymentGateway.Api.Tests.Integration.Controllers
             locationHeader.Should().EndWith(idProp.GetString());
         }
 
+        [Fact]
+        public async Task Get_transaction_returns_transaction()
+        {
+            var id = Guid.Parse("59ead15a-f908-4a66-9be3-4967520c621e");
+            var client = _webApplicationFactory.CreateDefaultClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
+
+            var response = await client.GetAsync($"api/payment/{id}");
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            using var jdoc = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+
+            jdoc.RootElement.GetProperty("id").GetGuid().Should().Be(id);
+            jdoc.RootElement.GetProperty("status").GetString().Should().Be("Success");
+            jdoc.RootElement.GetProperty("amount").GetDecimal().Should().Be(1234.93m);
+            jdoc.RootElement.GetProperty("cardNumber").GetString().Should().Be("************1234");
+        }
+
         private static async Task<T> ReadAsAsync<T>(HttpContent content)
         {
             var str = await content.ReadAsStringAsync();
