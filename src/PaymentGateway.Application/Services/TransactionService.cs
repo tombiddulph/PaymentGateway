@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using PaymentGateway.Application.Infrastructure;
 using PaymentGateway.Application.Models;
 using PaymentGateway.Models.Contracts;

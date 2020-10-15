@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 using PaymentGateway.Application.Models;
 
 namespace PaymentGateway.Application.Infrastructure
@@ -25,6 +27,12 @@ namespace PaymentGateway.Application.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (optionsBuilder.Options.Extensions.Any(x => x is InMemoryOptionsExtension))
+            {
+                //horrible hack
+                return;
+            }
+
             optionsBuilder.UseSqlite("Data Source=PaymentGateway.db;");
         }
 

@@ -1,10 +1,6 @@
 using System;
-using System.Security.Cryptography;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using Serilog;
 
 namespace PaymentGateway.Api

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Hosting;
 
-namespace PaymentGateway.Api.IntegrationTests
+namespace PaymentGateway.Api.Tests.Integration
 {
     public class CustomWebAppFactory : WebApplicationFactory<TestStartup> 
     {

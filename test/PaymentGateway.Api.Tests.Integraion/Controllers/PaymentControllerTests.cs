@@ -3,24 +3,18 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using PaymentGateway.Models;
 using PaymentGateway.Models.Contracts;
 using Xunit;
 
-namespace PaymentGateway.Api.IntegrationTests.Controllers
+namespace PaymentGateway.Api.Tests.Integration.Controllers
 {
     public class PaymentControllerTests : IClassFixture<CustomWebAppFactory>
     {
@@ -40,7 +34,7 @@ namespace PaymentGateway.Api.IntegrationTests.Controllers
         public async Task GetTransaction_returns_bad_request(string id)
         {
             var client = _webApplicationFactory.CreateClient();
-            
+
             var response = await client.GetAsync($"api/payment/{id}");
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -56,6 +50,7 @@ namespace PaymentGateway.Api.IntegrationTests.Controllers
             (CreatePaymentRequest request, ValidationProblemDetails error) testData)
         {
             var client = _webApplicationFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
             var response = await client.PostAsync("api/payment",
                 new StringContent(JsonSerializer.Serialize(testData.request), Encoding.Default,
                     MediaTypeNames.Application.Json));
@@ -122,7 +117,8 @@ namespace PaymentGateway.Api.IntegrationTests.Controllers
                     CardNumber = "1234567891123456",
                     Cvv = "1234",
                     ExpiryYear = "02",
-                    ExpiryMonth = "20"
+                    ExpiryMonth = "20",
+                    Name = "tom b"
                 }, new ValidationProblemDetails())
             };
 
@@ -142,14 +138,23 @@ namespace PaymentGateway.Api.IntegrationTests.Controllers
                 ExpiryYear = nextYear.ToString("yy")
             };
 
-            var client = _webApplicationFactory.WithWebHostBuilder(builder => builder.UseStartup<TestStartup>()).CreateDefaultClient();
-
+            var client = _webApplicationFactory.CreateDefaultClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
             var response = await client.PostAsync("api/payment",
                 new StringContent(JsonSerializer.Serialize(request), Encoding.Default,
                     MediaTypeNames.Application.Json));
 
             response.StatusCode.Should().Be(HttpStatusCode.Created);
             response.Headers.Should().Contain(x => x.Key == "Location");
+
+            var locationHeader = response.Headers.GetValues("Location").First();
+
+            using var jdoc = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+
+            var idProp = jdoc.RootElement.GetProperty("id");
+            idProp.GetGuid().Should().NotBeEmpty("Each payment has a unique id");
+            jdoc.RootElement.GetProperty("status").GetString().Should().Be("Success");
+            locationHeader.Should().EndWith(idProp.GetString());
         }
 
         private static async Task<T> ReadAsAsync<T>(HttpContent content)

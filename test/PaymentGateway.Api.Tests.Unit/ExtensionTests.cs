@@ -1,19 +1,23 @@
 using System;
-using System.Threading.Tasks;
 using AutoFixture;
+using AutoFixture.AutoMoq;
 using AutoFixture.Idioms;
 using FluentAssertions;
 using Moq;
 using PaymentGateway.Application;
 using PaymentGateway.Application.Models;
-using PaymentGateway.Application.Services;
 using Xunit;
 
 namespace PaymentGateway.Api.Tests.Unit
 {
     public class ExtensionTests
     {
-        private readonly IFixture _fixture = new Fixture();
+        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization());
+
+        public ExtensionTests()
+        {
+            _fixture.Register(() => new Card());
+        }
 
         [Fact]
         public void Mask_card_number_guards_parameters()
@@ -22,6 +26,7 @@ namespace PaymentGateway.Api.Tests.Unit
             var method = typeof(Extensions).GetMethod(nameof(Extensions.MaskCardNumber));
             assertion.Verify(method);
         }
+
         [Fact]
         public void Mask_card_number_returns_masked_number()
         {
@@ -57,7 +62,7 @@ namespace PaymentGateway.Api.Tests.Unit
             Action act = () => sut.SafeInvoke(handler, string.Empty);
 
             act.Should().ThrowExactly<InvalidOperationException>().WithMessage("Invalid operation");
-            
+
             Mock.Get(handler)
                 .Verify(x => x(It.Is<InvalidOperationException>(y => y.Message == "Invalid operation")),
                     Times.Once);
@@ -75,7 +80,6 @@ namespace PaymentGateway.Api.Tests.Unit
             Mock.Get(handler)
                 .Verify(x => x(It.IsAny<Exception>()),
                     Times.Never);
-            
         }
     }
 }
