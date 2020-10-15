@@ -40,6 +40,7 @@ namespace PaymentGateway.Application.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
                     MerchantId = table.Column<Guid>(nullable: false),

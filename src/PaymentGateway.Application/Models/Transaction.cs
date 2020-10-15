@@ -10,6 +10,7 @@ namespace PaymentGateway.Application.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        public string UserId { get; set; }
         public PaymentStatus Status { get; set; }
         public decimal Amount { get; set; }
         public Guid MerchantId { get; set; }

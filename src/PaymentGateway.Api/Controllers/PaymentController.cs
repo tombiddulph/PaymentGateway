@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PaymentGateway.Application.Services;
 using PaymentGateway.Models.Contracts;
@@ -8,7 +9,7 @@ using PaymentGateway.Models.Enums;
 
 namespace PaymentGateway.Api.Controllers
 {
-    [ApiController, Route("api/[controller]/")]
+    [ApiController, Route("api/[controller]/"), Authorize]
     public class PaymentController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
@@ -45,9 +46,9 @@ namespace PaymentGateway.Api.Controllers
         [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequest request)
         {
-            var transaction = await _transactionService.CreateTransactionAsync(request);
-            
-            throw new InvalidOperationException();
+            var user = HttpContext.User.GetLoggedInUserId();
+            var transaction = await _transactionService.CreateTransactionAsync(request, user);
+
 
             return transaction.Status switch
             {
@@ -87,7 +88,8 @@ namespace PaymentGateway.Api.Controllers
         [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
         public async Task<IActionResult> Transaction([FromRoute] GetTransactionRequest request)
         {
-            var transaction = await _transactionService.GetById(request.Id.GetValueOrDefault());
+            var user = HttpContext.User.GetLoggedInUserId();
+            var transaction = await _transactionService.GetById(request.Id.GetValueOrDefault(), user);
 
             return transaction.Status switch
             {

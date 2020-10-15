@@ -12,9 +12,12 @@ namespace PaymentGateway.Application.Infrastructure
             {
                 Database.Migrate();
             }
-          
         }
-        
+
+        public PaymentGatewayDbContext()
+        {
+        }
+
 
         public DbSet<Merchant> Merchants { get; set; }
         public DbSet<Card> Cards { get; set; }
@@ -22,7 +25,7 @@ namespace PaymentGateway.Application.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlite("Data Source=PaymentGateway.db;");
+            optionsBuilder.UseSqlite("Data Source=PaymentGateway.db;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,7 +46,7 @@ namespace PaymentGateway.Application.Infrastructure
             modelBuilder.Entity<Card>()
                 .HasMany(c => c.Transactions)
                 .WithOne(x => x.Card);
-            
+
             base.OnModelCreating(modelBuilder);
         }
     }

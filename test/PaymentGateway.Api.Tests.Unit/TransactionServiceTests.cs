@@ -45,7 +45,7 @@ namespace PaymentGateway.Api.Tests.Unit
 
             var request = _fixture.Create<CreatePaymentRequest>();
 
-            var result = await sut.CreateTransactionAsync(request);
+            var result = await sut.CreateTransactionAsync(request, _fixture.Create<string>());
 
             result.Id.Should().Be(paymentId);
             result.Status.Should().Be(PaymentStatus.Success);
@@ -62,7 +62,8 @@ namespace PaymentGateway.Api.Tests.Unit
 
             var sut = new TransactionService(repo);
 
-            Func<Task> act = async () => await sut.CreateTransactionAsync(_fixture.Create<CreatePaymentRequest>());
+            Func<Task> act = async () =>
+                await sut.CreateTransactionAsync(_fixture.Create<CreatePaymentRequest>(), _fixture.Create<string>());
 
             await act.Should().ThrowExactlyAsync<InvalidOperationException>();
         }
@@ -73,11 +74,13 @@ namespace PaymentGateway.Api.Tests.Unit
         {
             var repo = Mock.Of<IRepository<Transaction>>();
             var paymentId = Guid.NewGuid();
-            Mock.Get(repo).Setup(x => x.GetByIdAsync(paymentId)).ReturnsAsync((Transaction) null);
+            var userId = _fixture.Create<string>();
+            Mock.Get(repo).Setup(x => x.FindAsync(x => x.Id == paymentId && x.UserId == userId))
+                .ReturnsAsync((Transaction) null);
 
             var sut = new TransactionService(repo);
 
-            var result = await sut.GetById(paymentId);
+            var result = await sut.GetById(paymentId, userId);
 
 
             var expectedTransaction = new Models.Domain.Transaction

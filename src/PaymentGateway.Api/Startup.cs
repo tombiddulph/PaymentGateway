@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PaymentGateway.Api.Auth;
 using PaymentGateway.Application;
 using PaymentGateway.Application.Infrastructure;
 
@@ -40,7 +42,7 @@ namespace PaymentGateway.Api
                 options.UseLazyLoadingProxies();
                 options.UseSqlite(_configuration.GetSection("ConnectionString").Value);
             });
-
+            
             services.AddControllers(cfg => cfg.Filters.Add<ExceptionFilter>())
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddApplication();
@@ -65,6 +67,10 @@ namespace PaymentGateway.Api
             services.AddHealthChecks()
                 .AddCheck("HeartBeat", () => HealthCheckResult.Healthy(), new[] { "HeartBeat" })
                 .AddCheck("AlwaysUnhealthy", () => HealthCheckResult.Unhealthy());
+
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            services.AddScoped<IUserService, UserService>();
         }
 
 
@@ -87,7 +93,9 @@ namespace PaymentGateway.Api
                 config.RoutePrefix = string.Empty;
             });
 
+
             app.UseRouting();
+            app.UseAuthentication().UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

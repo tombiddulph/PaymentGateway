@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using PaymentGateway.Application.Infrastructure;
 using PaymentGateway.Application.Models;
 using PaymentGateway.Models.Contracts;
@@ -23,17 +24,22 @@ namespace PaymentGateway.Application.Services
             _transactionRepo = transactionRepo ?? throw new ArgumentNullException(nameof(transactionRepo));
         }
 
-        public Task<DomainTransaction> CreateTransactionAsync(CreatePaymentRequest request)
+        public Task<DomainTransaction> CreateTransactionAsync(CreatePaymentRequest request, string userId)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
             async Task<DomainTransaction> Create()
             {
                 var transaction = MapToTransaction(request);
+                transaction.UserId = userId;
                 var created = await _transactionRepo.AddAsync(transaction);
 
                 return new DomainTransaction
@@ -47,18 +53,23 @@ namespace PaymentGateway.Application.Services
         }
 
 
-        public Task<DomainTransaction> GetById(Guid transactionId)
+        public Task<DomainTransaction> GetById(Guid transactionId, string userId)
         {
             if (transactionId == Guid.Empty)
             {
                 throw new ArgumentException(nameof(transactionId));
             }
 
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+
             return GetById();
 
             async Task<DomainTransaction> GetById()
             {
-                var transaction = await _transactionRepo.GetByIdAsync(transactionId);
+                var transaction = await _transactionRepo.FindAsync(x => x.Id == transactionId && x.UserId == userId);
 
                 if (transaction is {})
                 {
@@ -108,7 +119,7 @@ namespace PaymentGateway.Application.Services
 
     public interface ITransactionService
     {
-        Task<DomainTransaction> CreateTransactionAsync(CreatePaymentRequest request);
-        Task<DomainTransaction> GetById(Guid transactionId);
+        Task<DomainTransaction> CreateTransactionAsync(CreatePaymentRequest request, string userId);
+        Task<DomainTransaction> GetById(Guid transactionId, string userId);
     }
 }

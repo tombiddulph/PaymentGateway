@@ -1,5 +1,7 @@
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PaymentGateway.Application.Models;
 
@@ -17,6 +19,14 @@ namespace PaymentGateway.Application.Infrastructure
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+
+        public Task<T> FindAsync(Expression<Func<T, bool>> selector)
+        {
+            Func<Expression<Func<T, bool>>, Task<T>> func = async expression =>
+                await _context.Set<T>().FirstOrDefaultAsync(expression);
+
+            return func.SafeInvoke(OnError, selector);
+        }
 
         public async Task<T> GetByIdAsync(Guid id)
         {
