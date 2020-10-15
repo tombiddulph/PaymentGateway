@@ -1,0 +1,29 @@
+# This is a basic workflow to help you get started with Actions
+
+name: dotnet-tests-report
+
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+ test:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Run unit tests
+      uses: zyborg/dotnet-tests-report@v1.1.0
+      with:
+         project_path: test/PaymentGateway.Api.Tests.Unit
+         report_name: payment_gateway_unit_tests
+         report_title: PaymentGateway Unit tests
+         github_token: ${{ secrets.GITHUB_TOKEN }}
+         gist_name: payment_gateway_unit_tests.md
+         gist_badge_label: 'Payment Gateway Unit: %Counters_passed%/%Counters_total%'
+         gist_token: ${{ secrets.GIST_TOKEN }}
+         
