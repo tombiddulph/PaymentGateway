@@ -1,0 +1,51 @@
+
+
+name: Run Unit & Integration tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+ test:
+   runs-on: ubuntu-latest
+   steps:
+     
+    - name: checkout
+      uses: actions/checkout@v2.3.3
+    
+    - name: setup dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+          dotnet-version: '3.1'
+    
+    - name: Restore dependencies 
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+   
+    - name: Run unit tests
+      uses: zyborg/dotnet-tests-report@v1.1.0
+      with:
+         project_path: test/PaymentGateway.Api.Tests.Unit/PaymentGateway.Api.Tests.Unit.csproj
+         report_name: payment_gateway_unit_tests
+         report_title: PaymentGateway Unit tests
+         github_token: ${{ secrets.GITHUB_TOKEN }}
+         gist_name: payment_gateway_unit_tests.md
+         gist_badge_label: 'Payment Gateway Unit Tests: %Counters_passed%/%Counters_total%'
+         gist_token: ${{ secrets.GIST_TOKEN }}
+         
+    - name: Run integration tests
+      uses: zyborg/dotnet-tests-report@v1.1.0
+      with:
+         project_path: test/PaymentGateway.Api.Tests.Integration/PaymentGateway.Api.Tests.Integration.csproj
+         report_name: payment_gateway_integration_tests
+         report_title: PaymentGateway Integration tests
+         github_token: ${{ secrets.GITHUB_TOKEN }}
+         gist_name: payment_gateway_unit_tests.md
+         gist_badge_label: 'Payment Gateway Integration tests: %Counters_passed%/%Counters_total%'
+         gist_token: ${{ secrets.GIST_TOKEN }}
+         
