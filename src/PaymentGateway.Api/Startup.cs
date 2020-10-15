@@ -42,7 +42,7 @@ namespace PaymentGateway.Api
                 options.UseLazyLoadingProxies();
                 options.UseSqlite(_configuration.GetSection("ConnectionString").Value);
             });
-            
+
             services.AddControllers(cfg => cfg.Filters.Add<ExceptionFilter>())
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddApplication();
@@ -63,9 +63,33 @@ namespace PaymentGateway.Api
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 config.IncludeXmlComments(xmlPath);
+
+                config.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "basic",
+                    In = ParameterLocation.Header,
+                    Description = "Basic auth (for demo purposes)"
+                });
+
+                config.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "basic"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
             services.AddHealthChecks()
-                .AddCheck("HeartBeat", () => HealthCheckResult.Healthy(), new[] { "HeartBeat" })
+                .AddCheck("HeartBeat", () => HealthCheckResult.Healthy(), new[] {"HeartBeat"})
                 .AddCheck("AlwaysUnhealthy", () => HealthCheckResult.Unhealthy());
 
             services.AddAuthentication("BasicAuthentication")
