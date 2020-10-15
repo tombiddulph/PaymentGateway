@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
@@ -17,13 +18,16 @@ using PaymentGateway.Application.Infrastructure;
 
 namespace PaymentGateway.Api
 {
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Startup
     {
         private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _configuration;
 
-        public Startup(IWebHostEnvironment env)
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             _env = env;
+            _configuration = configuration;
         }
 
 
@@ -34,34 +38,24 @@ namespace PaymentGateway.Api
             services.AddDbContext<PaymentGatewayDbContext>(options =>
             {
                 options.UseLazyLoadingProxies();
-                options.UseSqlite("Data Source=PaymentGateway.db;");
+                options.UseSqlite(_configuration.GetSection("ConnectionString").Value);
             });
 
+            services.AddControllers(cfg => cfg.Filters.Add<ExceptionFilter>())
+                .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddApplication();
-            services.AddMvc(options => { options.Filters.Add(new ExceptionFilter(_env)); }).AddJsonOptions(
+            services.AddMvc().AddJsonOptions(
                 options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
             );
+
             services.AddLogging();
             services.PostConfigure<ApiBehaviorOptions>(ConfigureApiBehaviorOptions);
+
             services.AddSwaggerGen(config =>
             {
-                config.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "Payment Gateway",
-                    Description = "Checkout.com Payment Gateway challenge",
-                    TermsOfService = new Uri("https://example.com/terms"),
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Tom Biddulph",
-                        Email = "tom[at]thomasbiddulph.com",
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "Use under LICX",
-                        Url = new Uri("https://example.com/license"),
-                    }
-                });
+                var openApiInfo = new OpenApiInfo();
+                _configuration.GetSection(nameof(OpenApiInfo)).Bind(openApiInfo);
+                config.SwaggerDoc("v1", openApiInfo);
                 config.DescribeAllParametersInCamelCase();
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

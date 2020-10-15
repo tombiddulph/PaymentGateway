@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PaymentGateway.Application.Services;
 using PaymentGateway.Models.Contracts;
-using PaymentGateway.Models.Domain;
 using PaymentGateway.Models.Enums;
 
 namespace PaymentGateway.Api.Controllers
@@ -36,16 +35,19 @@ namespace PaymentGateway.Api.Controllers
         ///     }    
         /// </remarks>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <response code="201">Returns the created payment</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="422">If An unknown error occurs</response>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(statusCode: 200, type: typeof(CreatePaymentResponse))]
+        [ProducesResponseType(statusCode: 201, type: typeof(CreatePaymentResponse))]
         [ProducesResponseType(statusCode: 400, type: typeof(ValidationProblemDetails))]
         [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequest request)
         {
             var transaction = await _transactionService.CreateTransactionAsync(request);
-
+            
+            throw new InvalidOperationException();
 
             return transaction.Status switch
             {
@@ -53,7 +55,8 @@ namespace PaymentGateway.Api.Controllers
                     $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{HttpContext.Request.PathBase}/api/payment/{transaction.Id}",
                     new CreatePaymentResponse
                     {
-                        Id = transaction.Id,
+                        // ReSharper disable once PossibleInvalidOperationException
+                        Id = transaction.Id.Value,
                         Status = transaction.Status
                     }),
                 PaymentStatus.Failure => new UnprocessableEntityResult(),
