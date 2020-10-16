@@ -59,10 +59,10 @@ namespace PaymentGateway.Api
                 _configuration.GetSection(nameof(OpenApiInfo)).Bind(openApiInfo);
                 config.SwaggerDoc("v1", openApiInfo);
                 config.DescribeAllParametersInCamelCase();
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                config.IncludeXmlComments(xmlPath);
+                //
+                // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                // config.IncludeXmlComments(xmlPath);
 
                 config.AddSecurityDefinition("basic", new OpenApiSecurityScheme
                 {

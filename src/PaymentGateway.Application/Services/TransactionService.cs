@@ -77,7 +77,8 @@ namespace PaymentGateway.Application.Services
                         Id = transaction.Id,
                         Status = Enum.Parse<PaymentStatus>(transaction.Status.ToString("G")),
                         Amount = transaction.Amount,
-                        CardNumber = transaction.Card.MaskCardNumber()
+                        CardNumber = transaction.Card.MaskCardNumber(),
+                        CardHolderName = transaction.Card.HolderName
                     };
                 }
 

@@ -174,6 +174,7 @@ namespace PaymentGateway.Api.Tests.Integration.Controllers
             jdoc.RootElement.GetProperty("status").GetString().Should().Be("Success");
             jdoc.RootElement.GetProperty("amount").GetDecimal().Should().Be(1234.93m);
             jdoc.RootElement.GetProperty("cardNumber").GetString().Should().Be("************1234");
+            jdoc.RootElement.GetProperty("cardHolderName").GetString().Should().Be("Test User");
         }
 
         private static async Task<T> ReadAsAsync<T>(HttpContent content)

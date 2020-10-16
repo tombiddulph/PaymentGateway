@@ -73,7 +73,7 @@ namespace PaymentGateway.Application.Infrastructure
                 Number = "1234123412341234",
                 ExpiryMonth = "09",
                 ExpiryYear = "30",
-                HolderName = "Test User"
+                HolderName = "Test User",
             });
             modelBuilder.Entity<Merchant>().HasData(new Merchant
             {

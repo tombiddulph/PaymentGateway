@@ -18,5 +18,8 @@ namespace PaymentGateway.Models.Domain
         [JsonPropertyName("cardNumber")]
         public string CardNumber { get; set; }
         
+        [JsonPropertyName("cardHolderName")]
+        public string CardHolderName { get; set; }
+        
     }
 }

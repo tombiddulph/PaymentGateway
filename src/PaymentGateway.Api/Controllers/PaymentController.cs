@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -6,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using PaymentGateway.Application.Services;
 using PaymentGateway.Models.Contracts;
 using PaymentGateway.Models.Enums;
+
 #pragma warning disable 8509
 
 namespace PaymentGateway.Api.Controllers
 {
     [ApiController, Route("api/[controller]/"), Authorize]
+    [SuppressMessage("ReSharper", "SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault")]
     public class PaymentController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
@@ -43,10 +46,10 @@ namespace PaymentGateway.Api.Controllers
         /// <response code="422">If An unknown error occurs</response>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(statusCode: 201, type: typeof(CreatePaymentResponse))]
-        [ProducesResponseType(statusCode: 400, type: typeof(ValidationProblemDetails))]
-        [ProducesResponseType(statusCode: 401, type: typeof(UnauthorizedResult))]
-        [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
+        [ProducesResponseType(statusCode: 201)]
+        [ProducesResponseType(statusCode: 400)]
+        [ProducesResponseType(statusCode: 401)]
+        [ProducesResponseType(statusCode: 422)]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequest request)
         {
             var user = HttpContext.User.GetLoggedInUserId();
@@ -88,10 +91,10 @@ namespace PaymentGateway.Api.Controllers
         [HttpGet("{id}")]
         [Consumes(MediaTypeNames.Text.Plain)]
         [ProducesResponseType(statusCode: 200, type: typeof(GetTransactionRequest))]
-        [ProducesResponseType(statusCode: 400, type: typeof(ValidationProblemDetails))]
-        [ProducesResponseType(statusCode: 400, type: typeof(NotFoundObjectResult))]
-        [ProducesResponseType(statusCode: 401, type: typeof(UnauthorizedResult))]
-        [ProducesResponseType(statusCode: 422, type: typeof(UnprocessableEntityResult))]
+        [ProducesResponseType(statusCode: 400)]
+        [ProducesResponseType(statusCode: 400)]
+        [ProducesResponseType(statusCode: 401)]
+        [ProducesResponseType(statusCode: 422)]
         public async Task<IActionResult> Transaction([FromRoute] GetTransactionRequest request)
         {
             var user = HttpContext.User.GetLoggedInUserId();
