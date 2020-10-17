@@ -12,15 +12,22 @@ namespace PaymentGateway.Application.Services
     internal class TransactionService : ITransactionService
     {
         private readonly IRepository<Transaction> _transactionRepo;
+        private readonly IPaymentValidator _paymentValidator;
 
         private static readonly DomainTransaction NotFound = new DomainTransaction
         {
             Status = PaymentStatus.NotFound
         };
 
-        public TransactionService(IRepository<Transaction> transactionRepo)
+        private static readonly DomainTransaction Invalid = new DomainTransaction
+        {
+            Status = PaymentStatus.Failure
+        };
+
+        public TransactionService(IRepository<Transaction> transactionRepo, IPaymentValidator paymentValidator)
         {
             _transactionRepo = transactionRepo ?? throw new ArgumentNullException(nameof(transactionRepo));
+            _paymentValidator = paymentValidator ?? throw new ArgumentNullException(nameof(paymentValidator));
         }
 
         public Task<DomainTransaction> CreateTransactionAsync(CreatePaymentRequest request, string userId)
@@ -35,8 +42,17 @@ namespace PaymentGateway.Application.Services
                 throw new ArgumentNullException(nameof(userId));
             }
 
-            async Task<DomainTransaction> Create()
+
+            async Task<DomainTransaction> ValidateAndCreate()
             {
+                var payment = MapToPayment(request);
+                var isValid = await _paymentValidator.ValidateAsync(payment);
+
+                if (!isValid)
+                {
+                    return Invalid;
+                }
+
                 var transaction = MapToTransaction(request);
                 transaction.UserId = userId;
                 var created = await _transactionRepo.AddAsync(transaction);
@@ -48,7 +64,7 @@ namespace PaymentGateway.Application.Services
                 };
             }
 
-            return Create();
+            return ValidateAndCreate();
         }
 
 
@@ -93,7 +109,7 @@ namespace PaymentGateway.Application.Services
             return new Transaction
             {
                 Amount = decimal.Parse(request.Amount, NumberStyles.Currency, NumberFormatInfo.InvariantInfo),
-                Status = Infrastructure.PaymentStatus.Success,
+                Status = Models.PaymentStatus.Success,
                 Card = MapToCard(),
                 CardId = cardId,
                 Merchant = new Merchant
@@ -115,6 +131,9 @@ namespace PaymentGateway.Application.Services
                 };
             }
         }
+
+        private static Payment MapToPayment(CreatePaymentRequest request) => new Payment
+            { Amount = decimal.Parse(request.Amount), CardNumber = request.CardNumber };
     }
 
     public interface ITransactionService

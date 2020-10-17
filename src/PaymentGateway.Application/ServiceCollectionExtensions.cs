@@ -12,7 +12,9 @@ namespace PaymentGateway.Application
             serviceCollection.AddScoped<IRepository<Card>, Repository<Card>>();
             serviceCollection.AddScoped<IRepository<Merchant>, Repository<Merchant>>();
             serviceCollection.AddScoped<IRepository<Transaction>, Repository<Transaction>>();
+            serviceCollection.AddScoped<IPaymentValidator, MockPaymentValidationService>();
             serviceCollection.AddScoped<ITransactionService, TransactionService>();
+           
             return serviceCollection;
         }
     }

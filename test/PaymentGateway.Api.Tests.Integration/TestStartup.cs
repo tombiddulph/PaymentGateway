@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Moq;
 using PaymentGateway.Application;
 using PaymentGateway.Application.Infrastructure;
-using PaymentGateway.Models.Domain;
 
 namespace PaymentGateway.Api.Tests.Integration
 {

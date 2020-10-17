@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using PaymentGateway.Api;
 
 namespace PaymentGateway.Models.Contracts
 {
     public class CreatePaymentRequest : IValidatableObject
     {
+        /// <summary>
+        /// 15 or 16 digit card number
+        /// </summary>
         [Required, StringLength(maximumLength: 16, MinimumLength = 15),
          RegularExpression(@"\d{15,16}", ErrorMessage = RequestErrors.Numeric)]
         public string CardNumber { get; set; }

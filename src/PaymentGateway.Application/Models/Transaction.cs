@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using PaymentGateway.Application.Infrastructure;
 
 namespace PaymentGateway.Application.Models
 {

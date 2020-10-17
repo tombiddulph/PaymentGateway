@@ -1,4 +1,4 @@
-namespace PaymentGateway.Api
+namespace PaymentGateway.Models
 {
     public static class RequestErrors
     {

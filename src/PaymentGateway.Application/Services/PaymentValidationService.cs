@@ -27,6 +27,5 @@ namespace PaymentGateway.Application.Services
     {
         public decimal Amount { get; set; }
         public string CardNumber { get; set; }
-        
     }
 }

@@ -38,10 +38,11 @@ namespace PaymentGateway.Api.Tests.Unit
         public async Task CreateTransaction_returns_transaction()
         {
             var repo = Mock.Of<IRepository<Transaction>>();
+            var paymentValidator = Mock.Of<IPaymentValidator>();
             var paymentId = Guid.NewGuid();
             Mock.Get(repo).Setup(x => x.AddAsync(It.IsAny<Transaction>())).ReturnsAsync(paymentId);
-
-            var sut = new TransactionService(repo);
+            Mock.Get(paymentValidator).Setup(x => x.ValidateAsync(It.IsAny<Payment>())).ReturnsAsync(true);
+            var sut = new TransactionService(repo, paymentValidator);
 
             var request = _fixture.Create<CreatePaymentRequest>();
 
@@ -57,10 +58,11 @@ namespace PaymentGateway.Api.Tests.Unit
         public async Task CreateTransaction_bubbles_up_exception()
         {
             var repo = Mock.Of<IRepository<Transaction>>();
+            var paymentValidator = Mock.Of<IPaymentValidator>();
             Mock.Get(repo).Setup(x => x.AddAsync(It.IsAny<Transaction>())).ThrowsAsync(new InvalidOperationException());
+            Mock.Get(paymentValidator).Setup(x => x.ValidateAsync(It.IsAny<Payment>())).ReturnsAsync(true);
 
-
-            var sut = new TransactionService(repo);
+            var sut = new TransactionService(repo, paymentValidator);
 
             Func<Task> act = async () =>
                 await sut.CreateTransactionAsync(_fixture.Create<CreatePaymentRequest>(), _fixture.Create<string>());
@@ -73,12 +75,15 @@ namespace PaymentGateway.Api.Tests.Unit
         public async Task Get_returns_not_found()
         {
             var repo = Mock.Of<IRepository<Transaction>>();
+            var paymentValidator = Mock.Of<IPaymentValidator>();
+
             var paymentId = Guid.NewGuid();
             var userId = _fixture.Create<string>();
-            Mock.Get(repo).Setup(x => x.FindAsync(x => x.Id == paymentId && x.UserId == userId))
+            Mock.Get(repo).Setup(x => x.FindAsync(y => y.Id == paymentId && y.UserId == userId))
                 .ReturnsAsync((Transaction) null);
+            Mock.Get(paymentValidator).Setup(x => x.ValidateAsync(It.IsAny<Payment>())).ReturnsAsync(true);
 
-            var sut = new TransactionService(repo);
+            var sut = new TransactionService(repo, paymentValidator);
 
             var result = await sut.GetById(paymentId, userId);
 

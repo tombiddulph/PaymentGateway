@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using PaymentGateway.Api.Auth;
 
-namespace PaymentGateway.Api
+namespace PaymentGateway.Api.Auth
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly IUserService _userService;

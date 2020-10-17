@@ -23,12 +23,10 @@ namespace PaymentGateway.Api
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Startup
     {
-        private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _configuration;
 
-        public Startup(IWebHostEnvironment env, IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
-            _env = env;
             _configuration = configuration;
         }
 
@@ -60,9 +58,9 @@ namespace PaymentGateway.Api
                 config.SwaggerDoc("v1", openApiInfo);
                 config.DescribeAllParametersInCamelCase();
                 //
-                // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                // config.IncludeXmlComments(xmlPath);
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                config.IncludeXmlComments(xmlPath);
 
                 config.AddSecurityDefinition("basic", new OpenApiSecurityScheme
                 {
