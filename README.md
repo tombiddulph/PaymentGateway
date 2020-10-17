@@ -2,7 +2,9 @@
 
 
 
-
+![Docker Image CI](https://github.com/tombiddulph/PaymentGatewayPrivate/workflows/Docker%20Image%20CI/badge.svg)\
+![Run Unit & Integration tests](https://github.com/tombiddulph/PaymentGatewayPrivate/workflows/Run%20Unit%20&%20Integration%20tests/badge.svg)
+![Build and deploy Docker app to Azure](https://github.com/tombiddulph/PaymentGatewayPrivate/workflows/Build%20and%20deploy%20Docker%20app%20to%20Azure/badge.svg)
 
 This project is a submission for the 'Build a Payment Gateway' take home coding test.
 
